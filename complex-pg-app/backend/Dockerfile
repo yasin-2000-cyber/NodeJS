@@ -4,7 +4,7 @@ WORKDIR /app
 
 # Install deps first for better layer caching
 COPY package.json package-lock.json* ./
-RUN npm install --omit=dev
+RUN npm ci --omit=dev
 
 # ---------- build (optional: if you later add TS/build step) ----------
 FROM node:20-alpine AS build
@@ -32,5 +32,5 @@ EXPOSE 3000
 
 # Run SQL migration then start server
 # Uses DATABASE_URL from environment
-CMD ["sh", "-c", "node src/util/run_migrations.js && node src/server.js"]
+CMD ["sh", "-c", "node src/util/wait_for_db.js && node src/util/run_migrations.js && node src/server.js"]
 
