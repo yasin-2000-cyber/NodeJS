@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Complex PG App</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="container">
+    <header class="row space">
+      <div>
+        <h1>Projects & Tasks</h1>
+        <p class="muted">JWT auth + Postgres + filters + pagination + stats</p>
+      </div>
+      <div class="row gap">
+        <button id="btnLogout" class="ghost hidden">Logout</button>
+      </div>
+    </header>
+
+    <section id="authPanel" class="card">
+      <h2>Login / Register</h2>
+      <div class="grid2">
+        <div>
+          <h3>Register</h3>
+          <form id="formRegister" class="stack">
+            <input name="email" type="email" placeholder="email" required />
+            <input name="password" type="password" placeholder="password (min 8)" minlength="8" required />
+            <button type="submit">Create account</button>
+          </form>
+        </div>
+        <div>
+          <h3>Login</h3>
+          <form id="formLogin" class="stack">
+            <input name="email" type="email" placeholder="email" required />
+            <input name="password" type="password" placeholder="password" required />
+            <button type="submit">Login</button>
+          </form>
+        </div>
+      </div>
+      <div id="authMsg" class="msg"></div>
+    </section>
+
+    <section id="appPanel" class="hidden">
+      <div class="grid2">
+        <div class="card">
+          <div class="row space">
+            <h2>Projects</h2>
+            <form id="formProject" class="row gap">
+              <input name="name" placeholder="New project name" required />
+              <button type="submit">Add</button>
+            </form>
+          </div>
+          <ul id="projectList" class="list"></ul>
+        </div>
+
+        <div class="card">
+          <div class="row space">
+            <h2>Tasks</h2>
+            <div class="row gap">
+              <button id="btnRefresh" class="ghost">Refresh</button>
+            </div>
+          </div>
+
+          <div class="filters">
+            <select id="filterStatus">
+              <option value="">All status</option>
+              <option value="todo">todo</option>
+              <option value="doing">doing</option>
+              <option value="done">done</option>
+              <option value="blocked">blocked</option>
+            </select>
+
+            <select id="filterPriority">
+              <option value="">All priority</option>
+              <option value="low">low</option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+              <option value="urgent">urgent</option>
+            </select>
+
+            <input id="filterQ" placeholder="Search title/description..." />
+            <select id="pageSize">
+              <option value="10">10/page</option>
+              <option value="20">20/page</option>
+              <option value="50">50/page</option>
+            </select>
+          </div>
+
+          <form id="formTask" class="stack top">
+            <input name="title" placeholder="Task title" required />
+            <textarea name="description" placeholder="Description"></textarea>
+
+            <div class="row gap">
+              <select name="status">
+                <option value="todo">todo</option>
+                <option value="doing">doing</option>
+                <option value="done">done</option>
+                <option value="blocked">blocked</option>
+              </select>
+              <select name="priority">
+                <option value="medium">medium</option>
+                <option value="low">low</option>
+                <option value="high">high</option>
+                <option value="urgent">urgent</option>
+              </select>
+              <input name="dueDate" type="datetime-local" />
+              <button type="submit">Add task</button>
+            </div>
+            <div class="muted small">Task will be added to the selected project.</div>
+          </form>
+
+          <div id="tasksMeta" class="row space small muted"></div>
+          <ul id="taskList" class="list"></ul>
+
+          <div class="row space top">
+            <button id="btnPrev" class="ghost">Prev</button>
+            <div class="row gap small muted">
+              <span>Page</span>
+              <strong id="pageNum">1</strong>
+            </div>
+            <button id="btnNext" class="ghost">Next</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card top">
+        <div class="row space">
+          <h2>Stats</h2>
+          <button id="btnStats" class="ghost">Load stats</button>
+        </div>
+        <pre id="statsOut" class="pre"></pre>
+      </div>
+    </section>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
+
